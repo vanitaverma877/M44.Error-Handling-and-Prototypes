@@ -1,0 +1,606 @@
+
+
+M44.Error Handling and Prototypes
+
+#Error Handling  and Prototypes Assignment Questions
+
+............................................................................
+
+Coding Challenges on Error Handling and Prototypes
+
+1. Type Conversion. ;
+Write a function called convertToNumber that takes a string as an argument and 
+returns the equivalent number. If the string cannot be converted to a number, 
+the function should return the string "Invalid number". Use error handling in 
+javascript to achieve this output.
+
+A.To solve this problem, we'll write a function called `convertToNumber` that attempts to convert a given string to a number. We'll use a `try...catch` block to handle any potential errors that might occur during the conversion process.
+
+Here’s the implementation:
+
+```javascript
+function convertToNumber(str) {
+    try {
+        const num = Number(str);
+        if (isNaN(num)) {
+            throw new Error("Invalid number");
+        }
+        return num;
+    } catch (error) {
+        return error.message;
+    }
+}
+
+// Example usage:
+console.log(convertToNumber("123"));     // Output: 123
+console.log(convertToNumber("abc"));     // Output: Invalid number
+console.log(convertToNumber("45.67"));   // Output: 45.67
+console.log(convertToNumber(""));        // Output: Invalid number
+```
+
+### Explanation:
+
+1. **The `Number` Function:**
+   - `Number(str)` attempts to convert the string `str` to a number.
+   - If `str` is a valid numeric string (e.g., `"123"`, `"45.67"`), it will be successfully converted to a number.
+   - If `str` is not a valid numeric string (e.g., `"abc"`), `Number(str)` will return `NaN`.
+
+2. **Error Handling with `try...catch`:**
+   - In the `try` block, we attempt to convert the string to a number.
+   - We check if the result is `NaN` using `isNaN(num)`.
+   - If the conversion fails (i.e., `num` is `NaN`), we throw an error with the message "Invalid number".
+   - The `catch` block catches this error and returns the error message.
+
+3. **Example Cases:**
+   - `"123"` is successfully converted to the number `123`.
+   - `"abc"` cannot be converted, so it throws an error and returns "Invalid number".
+   - `"45.67"` is successfully converted to the number `45.67`.
+   - An empty string `""` also cannot be converted, so it returns "Invalid number".
+
+This approach ensures that we gracefully handle cases where the string cannot be converted to a number by returning a meaningful error message.
+
+............................................................................
+
+2. Building Robust Functions in JavaScript ;
+Create a function called getPerson that takes an object as a parameter 
+representing a person's name and age. The function should return the person's 
+name and age as a string in the format "Name: <name>, Age: <age>". However, if 
+the parameter is not a valid object with the properties "name" and "age", the 
+function should throw an error with the message "Invalid parameter type". Use 
+try-catch to handle this error and return the error message if it occurs.
+
+A.To solve this problem, we’ll create a `getPerson` function that takes an object as a parameter and returns the person's name and age in the required format. We'll use error handling to manage cases where the object is not valid or doesn't have the required properties.
+
+Here’s the implementation:
+
+```javascript
+function getPerson(person) {
+    try {
+        // Check if the parameter is an object and contains both 'name' and 'age' properties
+        if (typeof person !== 'object' || person === null || !('name' in person) || !('age' in person)) {
+            throw new Error("Invalid parameter type");
+        }
+
+        // Return the formatted string
+        return `Name: ${person.name}, Age: ${person.age}`;
+    } catch (error) {
+        // Return the error message if an error occurs
+        return error.message;
+    }
+}
+
+// Example usage:
+console.log(getPerson({ name: "John", age: 30 })); // Output: "Name: John, Age: 30"
+console.log(getPerson({ name: "Jane" }));          // Output: "Invalid parameter type"
+console.log(getPerson("John"));                    // Output: "Invalid parameter type"
+console.log(getPerson(null));                      // Output: "Invalid parameter type"
+```
+
+### Explanation:
+
+1. **Checking the Object:**
+   - The function first checks whether the `person` parameter is an object using `typeof person === 'object'`.
+   - It also checks that the object is not `null`, and that it has the `name` and `age` properties using the `in` operator.
+
+2. **Throwing an Error:**
+   - If the parameter fails any of these checks (e.g., it's not an object, it's `null`, or it lacks the `name` or `age` properties), the function throws an error with the message "Invalid parameter type".
+
+3. **Handling the Error with `try-catch`:**
+   - The function is wrapped in a `try-catch` block.
+   - If an error is thrown, the `catch` block catches it and returns the error message.
+
+4. **Example Cases:**
+   - When a valid object `{ name: "John", age: 30 }` is passed, the function returns `"Name: John, Age: 30"`.
+   - If an object without the `age` property (like `{ name: "Jane" }`) is passed, the function throws an error and returns `"Invalid parameter type"`.
+   - If a non-object type (like `"John"` or `null`) is passed, the function also throws an error and returns `"Invalid parameter type"`.
+
+This implementation ensures that the function only works with valid input and gracefully handles errors by returning a clear error message when the input is invalid.
+
+............................................................................
+
+3. Car Description Class.
+Create a class called Car with three properties: company, model, and year. 
+The class should have a method called getDescription that returns a string in 
+the format "This is a <year> <company> <model>". Instantiate an instance of the 
+Car class and call the getDescription method.
+
+A.To solve this problem, we'll create a `Car` class with the properties `company`, `model`, and `year`. We'll also define a method `getDescription` that returns a formatted string describing the car.
+
+Here's the implementation:
+
+```javascript
+// Define the Car class
+class Car {
+    constructor(company, model, year) {
+        this.company = company;
+        this.model = model;
+        this.year = year;
+    }
+
+    // Method to return the car's description
+    getDescription() {
+        return `This is a ${this.year} ${this.company} ${this.model}`;
+    }
+}
+
+// Instantiate an instance of the Car class
+const myCar = new Car("Toyota", "Corolla", 2020);
+
+// Call the getDescription method
+console.log(myCar.getDescription()); // Output: "This is a 2020 Toyota Corolla"
+```
+
+### Explanation:
+
+1. **Class Definition (`Car`):**
+   - The `Car` class is defined using the `class` keyword.
+   - The class has a constructor (`constructor`) that accepts three parameters: `company`, `model`, and `year`. These parameters are used to initialize the properties of the `Car` instance.
+
+2. **getDescription Method:**
+   - The `getDescription` method is defined within the `Car` class.
+   - This method returns a formatted string that describes the car using its `year`, `company`, and `model` properties.
+
+3. **Instantiating the Car Class:**
+   - We create an instance of the `Car` class by calling the constructor with specific values (e.g., "Toyota", "Corolla", 2020).
+   - The `myCar` instance now represents a specific car with the provided details.
+
+4. **Calling the getDescription Method:**
+   - The `getDescription` method is called on the `myCar` instance.
+   - The output is `"This is a 2020 Toyota Corolla"`, which is logged to the console.
+
+This implementation effectively demonstrates how to create a class in JavaScript, define properties and methods, and work with instances of the class.
+
+............................................................................
+
+4. Employee Class Challenge.
+Create a class called Employee with three properties: name, position, and salary. 
+The class should have a method called getSalary that returns the employee's 
+salary. Instantiate an instance of the Employee class and call the getSalary 
+method.
+
+A.To solve this challenge, we'll create an `Employee` class with the properties `name`, `position`, and `salary`. The class will include a method called `getSalary` that returns the salary of the employee.
+
+Here's the implementation:
+
+```javascript
+// Define the Employee class
+class Employee {
+    constructor(name, position, salary) {
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+    }
+
+    // Method to return the employee's salary
+    getSalary() {
+        return this.salary;
+    }
+}
+
+// Instantiate an instance of the Employee class
+const employee1 = new Employee("John Doe", "Software Engineer", 80000);
+
+// Call the getSalary method
+console.log(employee1.getSalary()); // Output: 80000
+```
+
+### Explanation:
+
+1. **Class Definition (`Employee`):**
+   - The `Employee` class is defined with three properties: `name`, `position`, and `salary`.
+   - The constructor (`constructor`) is used to initialize these properties when a new instance of `Employee` is created.
+
+2. **getSalary Method:**
+   - The `getSalary` method is defined within the `Employee` class.
+   - This method returns the value of the `salary` property of the `Employee` instance.
+
+3. **Instantiating the Employee Class:**
+   - We create an instance of the `Employee` class by calling the constructor with specific values (e.g., "John Doe", "Software Engineer", 80000).
+   - The `employee1` instance now represents an employee with the provided details.
+
+4. **Calling the getSalary Method:**
+   - The `getSalary` method is called on the `employee1` instance.
+   - The output is `80000`, which is the salary of the employee and is logged to the console.
+
+This implementation demonstrates how to define a class with properties and methods in JavaScript, create instances of the class, and access the methods of the class to retrieve data.
+
+............................................................................
+
+5. Implementing a Person Class with Default Values
+Create a class called Person with two properties: name and age. The class should 
+have a method called getDetails that returns a string in the format "Name: <name>,
+Age: <age>". Use default parameters in the constructor to set the values of name 
+and age to "Unknown" and 0 if they are not provided.
+
+A.To implement a `Person` class with default values for `name` and `age`, we can define the class constructor with default parameters. If the user does not provide a value for `name` or `age`, these default values will be used instead.
+
+Here's the implementation:
+
+```javascript
+// Define the Person class
+class Person {
+    constructor(name = "Unknown", age = 0) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Method to return the person's details
+    getDetails() {
+        return `Name: ${this.name}, Age: ${this.age}`;
+    }
+}
+
+// Create instances of the Person class with and without parameters
+const person1 = new Person("Alice", 30);
+const person2 = new Person();
+
+// Call the getDetails method
+console.log(person1.getDetails()); // Output: Name: Alice, Age: 30
+console.log(person2.getDetails()); // Output: Name: Unknown, Age: 0
+```
+
+### Explanation:
+
+1. **Class Definition (`Person`):**
+   - The `Person` class is defined with two properties: `name` and `age`.
+   - The constructor method (`constructor`) is used to initialize these properties. It includes default values: `"Unknown"` for `name` and `0` for `age`.
+   - If no arguments are passed when creating an instance, the default values will be used.
+
+2. **getDetails Method:**
+   - The `getDetails` method returns a string formatted with the `name` and `age` properties of the `Person` instance.
+
+3. **Instantiating the Person Class:**
+   - `person1` is created with specific values ("Alice", 30).
+   - `person2` is created without any arguments, so it will use the default values.
+
+4. **Calling the getDetails Method:**
+   - `person1.getDetails()` returns `"Name: Alice, Age: 30"`.
+   - `person2.getDetails()` returns `"Name: Unknown, Age: 0"`.
+
+This implementation showcases how to set default values in a class constructor and how to define methods within a class to interact with object properties.
+
+............................................................................
+
+6. Using Static Method to Add Two Numbers with Calculator Class
+Create a class called Calculator with a static method called add. The add method 
+should take two numbers as arguments and return their sum. Instantiate the 
+Calculator class and call the add method.
+
+A.To implement a `Calculator` class with a static method called `add`, we can define the `add` method as a `static` method within the class. Static methods can be called directly on the class itself without needing to instantiate the class.
+
+Here's the implementation:
+
+```javascript
+// Define the Calculator class
+class Calculator {
+    // Static method to add two numbers
+    static add(a, b) {
+        return a + b;
+    }
+}
+
+// Call the add method directly on the Calculator class
+const result = Calculator.add(5, 10);
+
+console.log(result); // Output: 15
+```
+
+### Explanation:
+
+1. **Class Definition (`Calculator`):**
+   - The `Calculator` class is defined with a static method `add`.
+   - The `static` keyword allows the method to be called directly on the class, rather than on instances of the class.
+
+2. **Static Method (`add`):**
+   - The `add` method takes two parameters, `a` and `b`, and returns their sum.
+   - Since it’s a static method, it doesn’t require an instance of `Calculator` to be called.
+
+3. **Calling the Static Method:**
+   - The `add` method is called directly on the `Calculator` class using `Calculator.add(5, 10)`.
+   - The result is stored in the `result` variable and logged to the console, producing the output `15`.
+
+This approach demonstrates the use of static methods in JavaScript classes, which are useful when you want to define functions that are related to a class but don’t need access to instance-specific data.
+
+............................................................................
+
+7. Password Checker.
+Create a class called User with properties username and password. Implement a 
+getter method for password that returns the password with all characters replaced 
+by asterisks. Implement a setter method for password that checks if the new 
+password is at least 8 characters long and contains at least one number and one 
+uppercase letter. If the password is valid, set the new password. If not, log 
+an error message.
+
+A.To create a `User` class with a password checker, we need to implement the `password` property with both a getter and a setter method. The getter will return the password with all characters replaced by asterisks, and the setter will validate the new password based on specific criteria.
+
+Here’s the implementation:
+
+```javascript
+class User {
+    constructor(username, password) {
+        this.username = username;
+        this._password = password; // Use an underscore to indicate a private property
+    }
+
+    // Getter method for password (returns the password as asterisks)
+    get password() {
+        return '*'.repeat(this._password.length);
+    }
+
+    // Setter method for password (validates and sets the password)
+    set password(newPassword) {
+        const hasUpperCase = /[A-Z]/.test(newPassword);
+        const hasNumber = /\d/.test(newPassword);
+        const isLongEnough = newPassword.length >= 8;
+
+        if (isLongEnough && hasUpperCase && hasNumber) {
+            this._password = newPassword;
+            console.log('Password successfully updated.');
+        } else {
+            console.error('Password must be at least 8 characters long, contain at least one number, and one uppercase letter.');
+        }
+    }
+}
+
+// Example usage:
+const user = new User('john_doe', 'SecureP@ssw0rd');
+
+// Trying to access the password (should return asterisks)
+console.log(user.password); // Output: **************
+
+// Attempting to set a new password
+user.password = 'NewPass1';  // Output: Password successfully updated.
+
+// Attempting to set an invalid password
+user.password = 'short';  // Output: Password must be at least 8 characters long, contain at least one number, and one uppercase letter.
+
+// Checking the password again (should return asterisks)
+console.log(user.password); // Output: ********
+```
+
+### Explanation:
+
+1. **Class Definition (`User`):**
+   - The `User` class is defined with two properties: `username` and `_password`. The underscore (`_`) in `_password` is a common convention to indicate that it’s meant to be a private property (though it’s not truly private in JavaScript).
+
+2. **Getter Method (`get password`):**
+   - The `get` method for `password` returns the password with all characters replaced by asterisks. It does this by repeating the `*` character the same number of times as the length of the password.
+
+3. **Setter Method (`set password`):**
+   - The `set` method for `password` performs validation on the new password. It checks:
+     - If the password is at least 8 characters long.
+     - If the password contains at least one uppercase letter.
+     - If the password contains at least one number.
+   - If the new password meets all these criteria, it is set as the new password, and a success message is logged. Otherwise, an error message is logged.
+
+4. **Usage:**
+   - When a `User` object is created, the initial password is set.
+   - The `password` property can be accessed to see asterisks representing the password.
+   - The setter is used to update the password, with validation ensuring that only strong passwords are accepted.
+
+This implementation provides a basic example of how to use getters and setters in JavaScript to enforce certain constraints on class properties.
+
+............................................................................
+
+8. Adding a Method to a Prototype.
+Create a prototype object called Student with a property name . Add a method 
+called printDetails to the prototype that logs the string "Hello, my name is 
+(name)" to the console. Instantiate a Student object with the name "Mithun" 
+and call the printDetails method.
+
+A.To add a method to a prototype in JavaScript, you can define the method on the prototype object itself. Here’s how you can create a `Student` prototype, add a `printDetails` method to it, and then instantiate a `Student` object to call the method:
+
+### Step-by-Step Implementation:
+
+1. **Create the `Student` constructor function:**
+   - Define the `Student` constructor that initializes the `name` property.
+
+2. **Add the `printDetails` method to the `Student` prototype:**
+   - This method will log a string that includes the student's name.
+
+3. **Instantiate a `Student` object and call the `printDetails` method:**
+   - Create an instance of `Student` with the name "Mithun" and call the `printDetails` method.
+
+### Code Implementation:
+
+```javascript
+// Step 1: Create the Student constructor function
+function Student(name) {
+    this.name = name;
+}
+
+// Step 2: Add the printDetails method to the Student prototype
+Student.prototype.printDetails = function() {
+    console.log(`Hello, my name is ${this.name}`);
+};
+
+// Step 3: Instantiate a Student object and call the printDetails method
+const student1 = new Student('Mithun');
+student1.printDetails(); // Output: Hello, my name is Mithun
+```
+
+### Explanation:
+
+1. **Constructor Function (`Student`):**
+   - The `Student` constructor function is used to create new `Student` objects. It takes a `name` parameter and assigns it to the `name` property of the object.
+
+2. **Prototype Method (`printDetails`):**
+   - The `printDetails` method is added to the `Student.prototype`, meaning all instances of `Student` will have access to this method. The method logs a greeting string that includes the student's name.
+
+3. **Instance Creation and Method Call:**
+   - A new `Student` object is created with the name "Mithun" using the `new` keyword. The `printDetails` method is then called on this instance, which logs the greeting to the console.
+
+### Output:
+When you run the code, the console will display:
+
+```
+Hello, my name is Mithun
+```
+
+This demonstrates how to use prototypes in JavaScript to add methods that are shared across all instances of a constructor function.
+
+............................................................................
+
+9.Check the presence using closures.
+Create a numberChecker function that takes an array of numbers as an argument 
+and returns a function. The returned function should take another number as an 
+argument and return true if the number is in the array and false otherwise.
+
+A.You can use closures to create a `numberChecker` function in JavaScript. The idea is to have an outer function (`numberChecker`) that takes an array of numbers as an argument and returns an inner function. This inner function will have access to the array from the outer function, thanks to closures, and can check if a given number is present in the array.
+
+### Step-by-Step Implementation:
+
+1. **Define the `numberChecker` function:**
+   - This function accepts an array of numbers as an argument.
+   - It returns an inner function that takes a number as an argument and checks if this number is present in the array.
+
+2. **The returned function uses the array to check for the presence of the number:**
+   - The inner function uses the `Array.prototype.includes()` method to check if the array contains the number.
+
+### Code Implementation:
+
+```javascript
+// Step 1: Define the numberChecker function
+function numberChecker(numbersArray) {
+    // Step 2: Return the inner function that checks for the presence of a number
+    return function(number) {
+        return numbersArray.includes(number);
+    };
+}
+
+// Example usage:
+const numbers = [1, 2, 3, 4, 5];
+const checkNumber = numberChecker(numbers);
+
+console.log(checkNumber(3)); // Output: true
+console.log(checkNumber(6)); // Output: false
+```
+
+### Explanation:
+
+1. **Outer Function (`numberChecker`):**
+   - This function takes an array (`numbersArray`) as its parameter and returns an inner function.
+
+2. **Inner Function:**
+   - The returned function is where the closure occurs. It has access to `numbersArray` even after the `numberChecker` function has finished executing.
+   - It uses the `includes()` method to check if the array contains the provided number.
+
+3. **Example Usage:**
+   - The `checkNumber` function is created by calling `numberChecker(numbers)`, where `numbers` is `[1, 2, 3, 4, 5]`.
+   - `checkNumber(3)` returns `true` because `3` is in the array.
+   - `checkNumber(6)` returns `false` because `6` is not in the array.
+
+### Output:
+When you run the code, the console will display:
+
+```
+true
+false
+```
+
+This demonstrates how closures can be used in JavaScript to maintain access to variables from an outer function even after the outer function has completed execution.
+
+............................................................................
+
+10. Filter by Category.
+Write a function that takes an array of products and returns a function that 
+filters the array by a given product category. The function must filter an 
+eCommerce products array by a specific category. The closure filters products 
+using the filter() method. Finally, it returns a new array containing only the 
+products with the same category as the input.
+
+A.You can create a function that filters an array of products by category using closures in JavaScript. The outer function will accept an array of products and return an inner function that filters the products based on a specified category.
+
+### Step-by-Step Implementation:
+
+1. **Define the `filterByCategory` function:**
+   - This function takes an array of products as an argument.
+   - It returns an inner function that takes a category as an argument and filters the products based on that category.
+
+2. **The inner function uses the `filter()` method:**
+   - The inner function filters the products array, returning only those products that match the given category.
+
+### Code Implementation:
+
+```javascript
+// Step 1: Define the filterByCategory function
+function filterByCategory(products) {
+    // Step 2: Return the inner function that filters the products by category
+    return function(category) {
+        return products.filter(product => product.category === category);
+    };
+}
+
+// Example usage:
+const products = [
+    { name: 'Laptop', category: 'Electronics' },
+    { name: 'Shirt', category: 'Clothing' },
+    { name: 'Phone', category: 'Electronics' },
+    { name: 'Pants', category: 'Clothing' },
+    { name: 'Headphones', category: 'Electronics' }
+];
+
+const filterProducts = filterByCategory(products);
+
+console.log(filterProducts('Electronics'));
+// Output: [{ name: 'Laptop', category: 'Electronics' }, { name: 'Phone', category: 'Electronics' }, { name: 'Headphones', category: 'Electronics' }]
+
+console.log(filterProducts('Clothing'));
+// Output: [{ name: 'Shirt', category: 'Clothing' }, { name: 'Pants', category: 'Clothing' }]
+```
+
+### Explanation:
+
+1. **Outer Function (`filterByCategory`):**
+   - This function accepts an array of products (`products`) and returns an inner function.
+   - Each product is an object with properties like `name` and `category`.
+
+2. **Inner Function:**
+   - The inner function takes a category as an argument and uses the `filter()` method to return a new array containing only the products that match the specified category.
+   - The `filter()` method iterates over each product and checks if the product's category matches the provided category.
+
+3. **Example Usage:**
+   - `filterProducts('Electronics')` filters the products array and returns an array containing only products in the "Electronics" category.
+   - `filterProducts('Clothing')` filters the products array and returns an array containing only products in the "Clothing" category.
+
+### Output:
+When you run the code, the console will display:
+
+```
+[
+    { name: 'Laptop', category: 'Electronics' },
+    { name: 'Phone', category: 'Electronics' },
+    { name: 'Headphones', category: 'Electronics' }
+]
+[
+    { name: 'Shirt', category: 'Clothing' },
+    { name: 'Pants', category: 'Clothing' }
+]
+```
+
+This implementation demonstrates how closures in JavaScript can be used to create functions that maintain access to variables from an outer function, enabling more flexible and reusable code.
+
+............................................................................
+
+
+
